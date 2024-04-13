@@ -18,5 +18,13 @@ Processo de imaginaçao de feature:
 -- resolvi fazer o que entendo ser mais simple e adicionar o livro no exemplar
 
 -- Tempo estimado: 1 hora
--- Tempo consumido:
+-- Tempo consumido: 57:44 minutos
+--- dava pra ter feito em menos tempo se eu não ficasse em duvida sobre a validacao de livro existente.
+ A separecao em clean arch me fez refletir sobre como ter a validacao tanto no controller quanto no use case,
+ de inicio eu fazia a busca do livro 2 vezes, uma no controller para poder retornar um 'NOT FOUND' caso nao encontre e
+ outra no use case para garantir o use case sempre executaria com um livro existente, mas essa solução não me agradou.
+ No fim optei por deixar o use case recebendo uma funcao que retornará o livro, desse jeito eu crio a funcao no controller
+ que busca o livro e lanca a excecao de not found caso nao encontre, e passo essa funcao para o use case.
+--- Tembem perdi tempo com os testes. Ainda não domino o jqwiki e acabo precisando olhar a documentacao saber o que fazer
+
  */
