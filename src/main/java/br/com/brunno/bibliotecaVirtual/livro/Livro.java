@@ -1,12 +1,18 @@
 package br.com.brunno.bibliotecaVirtual.livro;
 
+import br.com.brunno.bibliotecaVirtual.exemplar.Exemplar;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 @Entity
 public class Livro {
@@ -20,6 +26,9 @@ public class Livro {
     private BigDecimal preco;
 
     private String isbn;
+
+    @OneToMany(mappedBy = "livro")
+    private List<Exemplar> exemplares = new ArrayList<>();
 
     @Deprecated
     public Livro() {}
@@ -47,5 +56,21 @@ public class Livro {
 
     public String getIsbn() {
         return isbn;
+    }
+
+    public Optional<Exemplar> getExemplar(Predicate<Exemplar> filtro) {
+        return this.exemplares.stream()
+                .filter(filtro)
+                .findFirst();
+    }
+
+    @Override
+    public String toString() {
+        return "Livro{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", preco=" + preco +
+                ", isbn='" + isbn + '\'' +
+                '}';
     }
 }

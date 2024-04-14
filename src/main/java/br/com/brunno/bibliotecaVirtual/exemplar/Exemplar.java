@@ -23,6 +23,10 @@ public class Exemplar {
 
     private Tipo tipo;
 
+
+    @Deprecated
+    public Exemplar() {}
+
     public Exemplar(Livro livro, Tipo tipo) {
         Assert.notNull(tipo, "Exemplar precisa ter um tipo");
         Assert.notNull(livro, "Exemplar precisar ter um livro existente");
@@ -44,9 +48,21 @@ public class Exemplar {
         return tipo;
     }
 
+    public boolean is(Tipo tipo) {
+        return this.tipo.equals(tipo);
+    }
+
     public enum Tipo {
         LIVRE,
         RESTRITO;
     }
 
+    @Override
+    public String toString() {
+        return "Exemplar{" +
+                "id=" + id +
+                ", livro=" + livro +
+                ", tipo=" + tipo +
+                '}';
+    }
 }

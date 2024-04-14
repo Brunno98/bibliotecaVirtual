@@ -51,6 +51,7 @@ passado uma data de prazo de entrega, caso não tenha sido então o pedido é in
  salvar o emprestimo no banco.
 
 -- Tempo estimado: 01:30 hora
--- tempo consumido:
+-- tempo consumido: 01:30 hora, porem com uma soluçao não agradavel. Como a maior parte do tempo consumido foi pensando
+em como refatorar o codigo pra uma versao melhor porém sem conseguir, resolvi parar e buscar ajuda no material de apoio
 
  */
