@@ -13,6 +13,10 @@ como foi feito o cadastro de usuario em outro projeto
 - retornar dados (sem a senha)
 
 -- tempo estimado: 40 minutos
--- tempo consumido:
+-- tempo consumido: 45:01 minutos
+--- Aceitei gastar um tempo revisando e refletindo sobre o design da minha solução, avaliando se havia ou
+ não algum ponto de melhoria.
+--- Perdi algum tempo nos testes novamente, pensando em como escreveria o teste, alem de alguns contratempos
+ por desconhecimento da ferramente jqwik
 
  */
