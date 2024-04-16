@@ -51,7 +51,7 @@ public class Usuario {
 
     public Emprestimo novoEmprestimo(Livro livro, Integer prazoDeEmprestimo) {
         Assert.isTrue(this.tipo.aceitaNovoEmprestimo(this), "Usuario nao é capaz de pegar um novo emprestimo");
-        Assert.isTrue(this.tipo.prazoDeEmprestimoValido(prazoDeEmprestimo), "Não deveria pedir um novo emprestimo com prazo invalido. Prazo: "+prazoDeEmprestimo);
+        Assert.isTrue(this.prazoDeEmprestimoValido(prazoDeEmprestimo), "Não deveria pedir um novo emprestimo com prazo invalido. Prazo: "+prazoDeEmprestimo);
 
         Optional<Exemplar> possivelExemplar = livro.buscaExemplarDisponivel(this);
         Assert.isTrue(possivelExemplar.isPresent(), "Livro precisa ter um exemplar disponivel para o usuario");
@@ -71,4 +71,7 @@ public class Usuario {
                 '}';
     }
 
+    public boolean prazoDeEmprestimoValido(Integer prazoDeEmprestimo) {
+        return this.tipo.prazoDeEmprestimoValido(prazoDeEmprestimo);
+    }
 }

@@ -2,7 +2,6 @@ package br.com.brunno.bibliotecaVirtual.emprestimo;
 
 import br.com.brunno.bibliotecaVirtual.livro.Livro;
 import br.com.brunno.bibliotecaVirtual.livro.LivroRepository;
-import br.com.brunno.bibliotecaVirtual.livro.UsuarioExisteValidator;
 import br.com.brunno.bibliotecaVirtual.usuario.Usuario;
 import br.com.brunno.bibliotecaVirtual.usuario.UsuarioRepository;
 import jakarta.persistence.EntityManager;

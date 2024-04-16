@@ -1,10 +1,8 @@
-package br.com.brunno.bibliotecaVirtual.livro;
+package br.com.brunno.bibliotecaVirtual.emprestimo;
 
-import br.com.brunno.bibliotecaVirtual.emprestimo.NovoEmprestimoResquest;
 import br.com.brunno.bibliotecaVirtual.usuario.Usuario;
 import br.com.brunno.bibliotecaVirtual.usuario.UsuarioRepository;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -14,10 +12,13 @@ import java.util.Optional;
 @Component
 public class UsuarioExisteValidator implements Validator {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-    @Autowired
-    private HttpServletRequest httpServletRequest;
+    private final UsuarioRepository usuarioRepository;
+    private final HttpServletRequest httpServletRequest;
+
+    public UsuarioExisteValidator(UsuarioRepository usuarioRepository, HttpServletRequest httpServletRequest) {
+        this.usuarioRepository = usuarioRepository;
+        this.httpServletRequest = httpServletRequest;
+    }
 
     @Override
     public boolean supports(Class<?> clazz) {

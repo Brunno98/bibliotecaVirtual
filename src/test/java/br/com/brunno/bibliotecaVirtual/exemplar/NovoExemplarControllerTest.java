@@ -54,7 +54,7 @@ class NovoExemplarControllerTest {
 
     @Test
     @DisplayName("Caso um livro não exista, então deve retorna not found")
-    void livroNaoEncontrado() throws Exception{
+    void livroNaoEncontrado() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/livro/ABCD/exemplar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(Map.of(
@@ -65,7 +65,7 @@ class NovoExemplarControllerTest {
 
     @Test
     @DisplayName("Quando houver erro de validacao, entao deve-se retornar badRequest")
-    void badRequest() throws Exception{
+    void badRequest() throws Exception {
         //TODO: o erro de validacao esta no jackson não conseguir transformar "" (vazio) em um Exemplar.Tipo
         // Ao meu ver, seria interante ter uma mensagem de retorno melhor explicativa
         mockMvc.perform(MockMvcRequestBuilders.post("/livro/ABCD/exemplar")

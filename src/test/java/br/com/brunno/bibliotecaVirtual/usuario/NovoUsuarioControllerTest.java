@@ -51,6 +51,15 @@ class NovoUsuarioControllerTest {
                         "tipo", tipo
                 ))))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/usuario")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(Map.of(
+                                "email", email+"@email.com",
+                                "senha", senha,
+                                "tipo", tipo
+                        ))))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
 }

@@ -1,6 +1,5 @@
 package br.com.brunno.bibliotecaVirtual.emprestimo;
 
-import br.com.brunno.bibliotecaVirtual.usuario.Tipo;
 import br.com.brunno.bibliotecaVirtual.usuario.Usuario;
 import br.com.brunno.bibliotecaVirtual.usuario.UsuarioRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,10 +13,13 @@ import java.util.Optional;
 @Component
 public class PrazoDeEmprestimoValidator implements Validator {
 
-    @Autowired
-    HttpServletRequest httpServletRequest;
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final HttpServletRequest httpServletRequest;
+    private final UsuarioRepository usuarioRepository;
+
+    public PrazoDeEmprestimoValidator(HttpServletRequest httpServletRequest, UsuarioRepository usuarioRepository) {
+        this.httpServletRequest = httpServletRequest;
+        this.usuarioRepository = usuarioRepository;
+    }
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -32,15 +34,9 @@ public class PrazoDeEmprestimoValidator implements Validator {
         String email = httpServletRequest.getHeader("X-EMAIL");
         Optional<Usuario> possivelUsuario = usuarioRepository.findByEmail(email);
         possivelUsuario.ifPresent(usuario -> {
-            Optional.ofNullable(request.getDiasDeEmprestimo()).ifPresentOrElse(diasDeEmprestimo -> {
-                if (diasDeEmprestimo > 60) {
-                    errors.rejectValue("diasDeEmprestimo", null, "Dias de emprestimo pode ser no maximo 60");
-                }
-            }, () -> {
-                if (usuario.is(Tipo.PADRAO)) {
-                    errors.rejectValue("diasDeEmprestimo", null, "É obrigatorio especificar os dias de emprestimo");
-                }
-            });
+            if (!usuario.prazoDeEmprestimoValido(request.getDiasDeEmprestimo())) {
+                errors.reject(null, "Prazo de emprestimo invalido para o usuario");
+            }
         });
     }
 }
