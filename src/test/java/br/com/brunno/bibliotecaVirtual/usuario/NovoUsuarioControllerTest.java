@@ -39,7 +39,7 @@ class NovoUsuarioControllerTest {
     void novoUsuario(
             @ForAll @StringLength(min=3, max=50) @AlphaChars @NotBlank String email,
             @ForAll @StringLength(min=6, max=255) @AlphaChars @NumericChars String senha,
-            @ForAll Usuario.Tipo tipo
+            @ForAll Tipo tipo
     ) throws Exception {
         Assumptions.assumeTrue(emailsUsados.add(email));
 

@@ -3,7 +3,7 @@ package br.com.brunno.bibliotecaVirtual.usuario;
 public class NovoUsuarioResponse {
 
     private final String email;
-    private final Usuario.Tipo tipo;
+    private final Tipo tipo;
 
     public NovoUsuarioResponse(Usuario usuario) {
         this.email = usuario.getEmail();
@@ -14,7 +14,7 @@ public class NovoUsuarioResponse {
         return email;
     }
 
-    public Usuario.Tipo getTipo() {
+    public Tipo getTipo() {
         return tipo;
     }
 }

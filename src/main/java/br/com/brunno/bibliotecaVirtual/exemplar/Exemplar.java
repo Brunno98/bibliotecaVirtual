@@ -1,6 +1,8 @@
 package br.com.brunno.bibliotecaVirtual.exemplar;
 
+import br.com.brunno.bibliotecaVirtual.emprestimo.Emprestimo;
 import br.com.brunno.bibliotecaVirtual.livro.Livro;
+import br.com.brunno.bibliotecaVirtual.usuario.Usuario;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,6 +11,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -22,6 +26,9 @@ public class Exemplar {
     private Livro livro;
 
     private Tipo tipo;
+
+    @OneToMany(mappedBy = "exemplar")
+    private List<Emprestimo> emprestimos = new ArrayList<>();
 
 
     @Deprecated
@@ -48,13 +55,19 @@ public class Exemplar {
         return tipo;
     }
 
-    public boolean is(Tipo tipo) {
-        return this.tipo.equals(tipo);
+    public boolean aceita(Usuario usuario) {
+        return this.tipo.aceita(usuario);
     }
 
-    public enum Tipo {
-        LIVRE,
-        RESTRITO;
+    public Emprestimo criaEmprestimo(Usuario usuario, Integer prazoDeEmprestimo) {
+        Assert.isTrue(this.disponivelParaEmprestimo(), "O exemplar precisa estar disponivel para emprestimo");
+        Emprestimo emprestimo = new Emprestimo(usuario, this, prazoDeEmprestimo);
+        this.emprestimos.add(emprestimo);
+        return emprestimo;
+    }
+
+    public boolean disponivelParaEmprestimo() {
+        return this.emprestimos.stream().allMatch(Emprestimo::devolvido);
     }
 
     @Override

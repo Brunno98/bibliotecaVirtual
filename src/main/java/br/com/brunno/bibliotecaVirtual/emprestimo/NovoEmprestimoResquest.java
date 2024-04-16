@@ -1,4 +1,4 @@
-package br.com.brunno.bibliotecaVirtual.livro;
+package br.com.brunno.bibliotecaVirtual.emprestimo;
 
 public class NovoEmprestimoResquest {
 

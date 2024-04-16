@@ -1,5 +1,6 @@
-package br.com.brunno.bibliotecaVirtual.livro;
+package br.com.brunno.bibliotecaVirtual.emprestimo;
 
+import br.com.brunno.bibliotecaVirtual.usuario.Tipo;
 import br.com.brunno.bibliotecaVirtual.usuario.Usuario;
 import br.com.brunno.bibliotecaVirtual.usuario.UsuarioRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,7 +37,7 @@ public class PrazoDeEmprestimoValidator implements Validator {
                     errors.rejectValue("diasDeEmprestimo", null, "Dias de emprestimo pode ser no maximo 60");
                 }
             }, () -> {
-                if (usuario.is(Usuario.Tipo.PADRAO)) {
+                if (usuario.is(Tipo.PADRAO)) {
                     errors.rejectValue("diasDeEmprestimo", null, "É obrigatorio especificar os dias de emprestimo");
                 }
             });

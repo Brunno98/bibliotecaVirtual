@@ -7,7 +7,7 @@ import org.springframework.util.Assert;
 public class NovoExemplarRequest implements DadosNovoExemplar{
 
     @NotNull
-    private Exemplar.Tipo tipo;
+    private Tipo tipo;
 
     @Override
     public Exemplar toExemplar(Livro livro) {
@@ -15,7 +15,7 @@ public class NovoExemplarRequest implements DadosNovoExemplar{
         return new Exemplar(livro, tipo);
     }
 
-    public Exemplar.Tipo getTipo() {
+    public Tipo getTipo() {
         return tipo;
     }
 }

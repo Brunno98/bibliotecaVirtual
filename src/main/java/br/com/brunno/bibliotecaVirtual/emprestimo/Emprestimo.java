@@ -1,14 +1,17 @@
-package br.com.brunno.bibliotecaVirtual.livro;
+package br.com.brunno.bibliotecaVirtual.emprestimo;
 
 import br.com.brunno.bibliotecaVirtual.exemplar.Exemplar;
 import br.com.brunno.bibliotecaVirtual.usuario.Usuario;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Null;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 public class Emprestimo {
@@ -24,6 +27,9 @@ public class Emprestimo {
     private Exemplar exemplar;
 
     private LocalDate prazoDeEmprestimo;
+
+    @Nullable
+    private LocalDate dataDevolucao;
 
 
     @Deprecated
@@ -46,5 +52,9 @@ public class Emprestimo {
                 ", exemplar=" + exemplar +
                 ", prazoDeEmprestimo=" + prazoDeEmprestimo +
                 '}';
+    }
+
+    public boolean devolvido() {
+        return Objects.nonNull(this.dataDevolucao);
     }
 }

@@ -1,5 +1,6 @@
 package br.com.brunno.bibliotecaVirtual.livro;
 
+import br.com.brunno.bibliotecaVirtual.emprestimo.NovoEmprestimoResquest;
 import br.com.brunno.bibliotecaVirtual.usuario.Usuario;
 import br.com.brunno.bibliotecaVirtual.usuario.UsuarioRepository;
 import jakarta.servlet.http.HttpServletRequest;

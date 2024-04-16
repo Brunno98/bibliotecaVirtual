@@ -34,7 +34,7 @@ class NovoExemplarControllerTest {
     @Label("Deve criar um novo exemplar")
     @Property(tries = 20, generation = GenerationMode.RANDOMIZED, edgeCases = EdgeCasesMode.FIRST)
     void criaNovoExemplar(
-            @ForAll @NotBlank Exemplar.Tipo tipo
+            @ForAll @NotBlank Tipo tipo
     ) throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/livro")
                         .contentType(MediaType.APPLICATION_JSON)

@@ -1,23 +1,20 @@
 package br.com.brunno.bibliotecaVirtual.usuario;
 
-import br.com.brunno.bibliotecaVirtual.livro.Emprestimo;
+import br.com.brunno.bibliotecaVirtual.exemplar.Exemplar;
+import br.com.brunno.bibliotecaVirtual.emprestimo.Emprestimo;
 import br.com.brunno.bibliotecaVirtual.livro.Livro;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class Usuario {
-    public enum Tipo {
-        PADRAO,
-        PESQUISADOR;
-    }
-
     @Id
     @GeneratedValue
     private Long id;
@@ -52,6 +49,19 @@ public class Usuario {
         return this.tipo.equals(tipo);
     }
 
+    public Emprestimo novoEmprestimo(Livro livro, Integer prazoDeEmprestimo) {
+        Assert.isTrue(this.tipo.aceitaNovoEmprestimo(this), "Usuario nao é capaz de pegar um novo emprestimo");
+        Assert.isTrue(this.tipo.prazoDeEmprestimoValido(prazoDeEmprestimo), "Não deveria pedir um novo emprestimo com prazo invalido. Prazo: "+prazoDeEmprestimo);
+
+        Optional<Exemplar> possivelExemplar = livro.buscaExemplarDisponivel(this);
+        Assert.isTrue(possivelExemplar.isPresent(), "Livro precisa ter um exemplar disponivel para o usuario");
+        Exemplar exemplar = possivelExemplar.get();
+
+        Emprestimo emprestimo = exemplar.criaEmprestimo(this, prazoDeEmprestimo);
+        this.emprestimos.add(emprestimo);
+        return emprestimo;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -60,4 +70,5 @@ public class Usuario {
                 ", tipo=" + tipo +
                 '}';
     }
+
 }

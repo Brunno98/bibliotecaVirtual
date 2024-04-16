@@ -1,6 +1,7 @@
 package br.com.brunno.bibliotecaVirtual.livro;
 
 import br.com.brunno.bibliotecaVirtual.exemplar.Exemplar;
+import br.com.brunno.bibliotecaVirtual.usuario.Usuario;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -58,9 +59,10 @@ public class Livro {
         return isbn;
     }
 
-    public Optional<Exemplar> getExemplar(Predicate<Exemplar> filtro) {
+    public Optional<Exemplar> buscaExemplarDisponivel(Usuario usuario) {
         return this.exemplares.stream()
-                .filter(filtro)
+                .filter(Exemplar::disponivelParaEmprestimo)
+                .filter(exemplar -> exemplar.aceita(usuario))
                 .findFirst();
     }
 
