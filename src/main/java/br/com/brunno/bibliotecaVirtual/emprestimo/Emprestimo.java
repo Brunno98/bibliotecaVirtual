@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.Null;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
@@ -39,6 +38,7 @@ public class Emprestimo {
         Assert.notNull(usuario, "Emprestimo precisa ter um usuario");
         Assert.notNull(exemplar, "Emprestimo pracisa ter um exemplar");
         Assert.notNull(diasDeEmprestimo, "Precisa ser defino os dias de prazo de emprestimo");
+        Assert.isTrue(diasDeEmprestimo > 0, "Nao pode criar emprestimo com dias negativo ou zerado");
         this.usuario = usuario;
         this.exemplar = exemplar;
         this.prazoDeEmprestimo = LocalDate.now().plusDays(diasDeEmprestimo);
@@ -56,5 +56,10 @@ public class Emprestimo {
 
     public boolean devolvido() {
         return Objects.nonNull(this.dataDevolucao);
+    }
+
+    public boolean expirado() {
+        if (Objects.nonNull(this.dataDevolucao)) return false;
+        return LocalDate.now().isAfter(prazoDeEmprestimo);
     }
 }

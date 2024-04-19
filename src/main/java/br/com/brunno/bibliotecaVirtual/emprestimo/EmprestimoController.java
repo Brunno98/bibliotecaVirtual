@@ -33,6 +33,8 @@ public class EmprestimoController {
     private PrazoDeEmprestimoValidator prazoDeEmprestimoValidator;
     @Autowired
     private UsuarioExisteValidator usuarioExisteValidator;
+    @Autowired
+    private UsuarioTemEmprestimoExpiradoValidator usuarioTemEmprestimoExpiradoValidator;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -41,6 +43,7 @@ public class EmprestimoController {
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(prazoDeEmprestimoValidator);
         binder.addValidators(usuarioExisteValidator);
+        binder.addValidators(usuarioTemEmprestimoExpiradoValidator);
     }
 
     @Transactional

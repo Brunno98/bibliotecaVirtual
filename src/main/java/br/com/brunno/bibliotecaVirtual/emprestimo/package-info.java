@@ -40,6 +40,7 @@ em como refatorar o codigo pra uma versao melhor porém sem conseguir, resolvi p
 - adicionar validacao na camada de serviço tambem
 
 -- tempo estimado: 30 minutos
--- tempo consumido:
+-- tempo consumido: 45 minutos
+-- desenvolvimento da solução levou 18 minutos, o restante do tempo foi planejando e escrevendo os testes
 
  */

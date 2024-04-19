@@ -74,4 +74,8 @@ public class Usuario {
     public boolean prazoDeEmprestimoValido(Integer prazoDeEmprestimo) {
         return this.tipo.prazoDeEmprestimoValido(prazoDeEmprestimo);
     }
+
+    public boolean temEmprestimoExpirado() {
+        return this.emprestimos.stream().anyMatch(Emprestimo::expirado);
+    }
 }
