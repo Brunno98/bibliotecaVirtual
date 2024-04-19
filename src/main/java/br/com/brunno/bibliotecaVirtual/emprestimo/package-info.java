@@ -54,6 +54,6 @@ eu abstrair atraves de um header onde receberei o email do usuario.
 - validar se foi o usario quem fez o emprestimo.
 
 -- Tempo estimado: 40 minutos
--- Tempo consumido:
+-- Tempo consumido: 42:00 minutos
 
  */

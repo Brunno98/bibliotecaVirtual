@@ -36,7 +36,7 @@ class EmprestimoTest {
         ReflectionTestUtils.setField(emprestimo, "dataDevolucao", LocalDate.now().minusDays(1));
 
         Assertions.assertThat(emprestimo.expirado()).isFalse();
-        Assertions.assertThat(emprestimo.devolvido()).isTrue();
+        Assertions.assertThat(emprestimo.foiDevolvido()).isTrue();
     }
 
     @DisplayName("Nao deve ser possivel criar emprestimo com dias de entrega negativo")

@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Entity
@@ -77,5 +78,18 @@ public class Usuario {
 
     public boolean temEmprestimoExpirado() {
         return this.emprestimos.stream().anyMatch(Emprestimo::expirado);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(email, usuario.email) && tipo == usuario.tipo;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, tipo);
     }
 }

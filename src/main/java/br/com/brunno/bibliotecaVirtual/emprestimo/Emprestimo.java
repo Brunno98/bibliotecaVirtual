@@ -54,12 +54,31 @@ public class Emprestimo {
                 '}';
     }
 
-    public boolean devolvido() {
+    public boolean foiDevolvido() {
         return Objects.nonNull(this.dataDevolucao);
     }
 
     public boolean expirado() {
         if (Objects.nonNull(this.dataDevolucao)) return false;
         return LocalDate.now().isAfter(prazoDeEmprestimo);
+    }
+
+    public boolean feitoPor(Usuario usuario) {
+        Assert.notNull(usuario, "Usuario nao pode ser nulo");
+        return this.usuario.equals(usuario);
+    }
+
+    public void devolver() {
+        Assert.isNull(this.dataDevolucao, "Nao pode devolver um emprestimo ja devolvido");
+        this.dataDevolucao = LocalDate.now();
+        Assert.isTrue(this.foiDevolvido(), "Este emprestimo deveria se considerado como devolvido");
+    }
+
+    public LocalDate getPrazoDeEmprestimo() {
+        return this.prazoDeEmprestimo;
+    }
+
+    public Long getId() {
+        return this.id;
     }
 }

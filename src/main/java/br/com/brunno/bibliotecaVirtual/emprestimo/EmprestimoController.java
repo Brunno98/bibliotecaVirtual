@@ -48,7 +48,7 @@ public class EmprestimoController {
     @Transactional
     //TODO: adicionar handler de MissingRequestHeaderException
     @PostMapping("/livro/{isbn}/emprestimo")
-    public String novoEmprestimo(
+    public NovoEmprestimoResponse novoEmprestimo(
             @RequestHeader("X-EMAIL") @Valid @Exists(domain = Usuario.class, domainField = "email") String email,
             @PathVariable @Valid @Exists(domain = Livro.class, domainField = "isbn") String isbn,
             @RequestBody @Valid NovoEmprestimoResquest resquest
@@ -65,7 +65,9 @@ public class EmprestimoController {
 
         Emprestimo emprestimo = usuario.novoEmprestimo(livro, prazoDeEmprestimo);
         entityManager.persist(emprestimo);
-        return emprestimo.toString();
+        return new NovoEmprestimoResponse(emprestimo);
     }
+
+
 
 }

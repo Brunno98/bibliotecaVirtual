@@ -67,7 +67,7 @@ public class Exemplar {
     }
 
     public boolean disponivelParaEmprestimo() {
-        return this.emprestimos.stream().allMatch(Emprestimo::devolvido);
+        return this.emprestimos.stream().allMatch(Emprestimo::foiDevolvido);
     }
 
     @Override
