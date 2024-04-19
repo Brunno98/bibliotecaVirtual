@@ -43,4 +43,17 @@ em como refatorar o codigo pra uma versao melhor porém sem conseguir, resolvi p
 -- tempo consumido: 45 minutos
 -- desenvolvimento da solução levou 18 minutos, o restante do tempo foi planejando e escrevendo os testes
 
+# Devolucao de um emprestimo
+- Novo endpoint POST /emprestimo/{id}/devolucao
+- novo controller chamado DevolucaoEmprestimoController
+- fazer a identificacao do usuario. Essa identificao seria idealmente feita pelo springSecurity mas pra simplificar
+eu abstrair atraves de um header onde receberei o email do usuario.
+- validar se o usuario existe. (Talvez essa validacao nao existice com o spring security)
+- validar se o emprestimo existe.
+- validar se o emprestimo está em aberto.
+- validar se foi o usario quem fez o emprestimo.
+
+-- Tempo estimado: 40 minutos
+-- Tempo consumido:
+
  */
