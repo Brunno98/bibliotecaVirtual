@@ -33,4 +33,13 @@ passado uma data de prazo de entrega, caso não tenha sido então o pedido é in
 -- tempo consumido: 01:30 hora, porem com uma soluçao não agradavel. Como a maior parte do tempo consumido foi pensando
 em como refatorar o codigo pra uma versao melhor porém sem conseguir, resolvi parar e buscar ajuda no material de apoio
 
+# Restricao de emprestimos expirados:
+- criar validador no controller de emprestimo
+- adicionar metodo no usuario que diz se o mesmo tem emprestimo expirado
+- provavelmente, adicionar metodo no emprestimo que diz se está expirado
+- adicionar validacao na camada de serviço tambem
+
+-- tempo estimado: 30 minutos
+-- tempo consumido:
+
  */
