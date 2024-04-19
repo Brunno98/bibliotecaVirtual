@@ -1,5 +1,6 @@
 package br.com.brunno.bibliotecaVirtual.emprestimo;
 
+import br.com.brunno.bibliotecaVirtual.compartilhado.Exists;
 import br.com.brunno.bibliotecaVirtual.livro.Livro;
 import br.com.brunno.bibliotecaVirtual.livro.LivroRepository;
 import br.com.brunno.bibliotecaVirtual.usuario.Usuario;
@@ -9,6 +10,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
-
+// 9 > 7
 @RestController
 public class EmprestimoController {
 
@@ -32,8 +34,6 @@ public class EmprestimoController {
     @Autowired
     private PrazoDeEmprestimoValidator prazoDeEmprestimoValidator;
     @Autowired
-    private UsuarioExisteValidator usuarioExisteValidator;
-    @Autowired
     private UsuarioTemEmprestimoExpiradoValidator usuarioTemEmprestimoExpiradoValidator;
 
     @PersistenceContext
@@ -42,7 +42,6 @@ public class EmprestimoController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(prazoDeEmprestimoValidator);
-        binder.addValidators(usuarioExisteValidator);
         binder.addValidators(usuarioTemEmprestimoExpiradoValidator);
     }
 
@@ -50,19 +49,16 @@ public class EmprestimoController {
     //TODO: adicionar handler de MissingRequestHeaderException
     @PostMapping("/livro/{isbn}/emprestimo")
     public String novoEmprestimo(
-            @RequestHeader("X-EMAIL") String email,
-            @PathVariable String isbn,
+            @RequestHeader("X-EMAIL") @Valid @Exists(domain = Usuario.class, domainField = "email") String email,
+            @PathVariable @Valid @Exists(domain = Livro.class, domainField = "isbn") String isbn,
             @RequestBody @Valid NovoEmprestimoResquest resquest
     ) throws BindException {
         Optional<Livro> possivelLivro = livroRepository.findByIsbn(isbn);
-        if (possivelLivro.isEmpty()) {
-            BindingResult errors = new BeanPropertyBindingResult(isbn, "livro");
-            errors.reject(null, "livro com isbn "+isbn+" nao existe");
-            throw new BindException(errors);
-        }
+        Assert.isTrue(possivelLivro.isPresent(), "Livro com isbn "+isbn+" deveria existir");
         Livro livro = possivelLivro.get();
 
         Optional<Usuario> possivelUsuario = usuarioRepository.findByEmail(email);
+        Assert.isTrue(possivelUsuario.isPresent(), "Usuario com email "+email+"deveria existir");
         Usuario usuario = possivelUsuario.get();
 
         Integer prazoDeEmprestimo = resquest.getDiasDeEmprestimo();

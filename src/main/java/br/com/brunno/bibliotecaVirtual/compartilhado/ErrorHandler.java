@@ -3,6 +3,7 @@ package br.com.brunno.bibliotecaVirtual.compartilhado;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.validation.BindException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -15,6 +16,11 @@ public class ErrorHandler {
         problemDetail.setProperty("globalErrors", e.getGlobalErrors());
         problemDetail.setProperty("fieldErrors", e.getFieldErrors());
         return problemDetail;
+    }
+
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    public ProblemDetail handle(MissingRequestHeaderException e) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
 }
