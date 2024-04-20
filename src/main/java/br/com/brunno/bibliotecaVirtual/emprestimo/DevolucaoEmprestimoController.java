@@ -35,18 +35,18 @@ public class DevolucaoEmprestimoController {
         Assert.isTrue(possivelEmprestimo.isPresent(), "Emprestimo de id "+id+" deveria existir");
         Emprestimo emprestimo = possivelEmprestimo.get();
 
-        if (emprestimo.foiDevolvido()) {
-            BeanPropertyBindingResult devolucaoDeEmprestimo = new BeanPropertyBindingResult(null, "devolucaoDeEmprestimo");
-            devolucaoDeEmprestimo.reject(null, "Emprestimo ja foi devolvido");
-            throw new BindException(devolucaoDeEmprestimo);
-        }
-
         Optional<Usuario> possivelUsuario = usuarioRepository.findByEmail(email);
         Assert.isTrue(possivelUsuario.isPresent(), "Usuario "+email+" deveria existir");
         Usuario usuario = possivelUsuario.get();
 
         if (!emprestimo.feitoPor(usuario)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        if (emprestimo.foiDevolvido()) {
+            BeanPropertyBindingResult devolucaoDeEmprestimo = new BeanPropertyBindingResult(null, "devolucaoDeEmprestimo");
+            devolucaoDeEmprestimo.reject(null, "Emprestimo ja foi devolvido");
+            throw new BindException(devolucaoDeEmprestimo);
         }
 
         emprestimo.devolver();
