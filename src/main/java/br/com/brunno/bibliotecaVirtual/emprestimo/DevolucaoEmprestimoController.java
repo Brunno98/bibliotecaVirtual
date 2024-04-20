@@ -49,7 +49,7 @@ public class DevolucaoEmprestimoController {
             throw new BindException(devolucaoDeEmprestimo);
         }
 
-        emprestimo.devolver();
+        emprestimo.realizaDevolucao(usuario);
 
         emprestimoRepository.save(emprestimo);
 

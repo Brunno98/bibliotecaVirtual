@@ -68,8 +68,9 @@ public class Emprestimo {
         return this.usuario.equals(usuario);
     }
 
-    public void devolver() {
+    public void realizaDevolucao(Usuario usuarioQueEstaDevolvendo) {
         Assert.isNull(this.dataDevolucao, "Nao pode devolver um emprestimo ja devolvido");
+        Assert.isTrue(this.feitoPor(usuarioQueEstaDevolvendo), "Devolucao do emprestimo deve ser feita apenas por quem pegou emprestado");
         this.dataDevolucao = LocalDate.now();
         Assert.isTrue(this.foiDevolvido(), "Este emprestimo deveria se considerado como devolvido");
     }
