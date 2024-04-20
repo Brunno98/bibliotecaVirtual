@@ -46,7 +46,6 @@ public class EmprestimoController {
     }
 
     @Transactional
-    //TODO: adicionar handler de MissingRequestHeaderException
     @PostMapping("/livro/{isbn}/emprestimo")
     public NovoEmprestimoResponse novoEmprestimo(
             @RequestHeader("X-EMAIL") @Valid @Exists(domain = Usuario.class, domainField = "email") String email,
