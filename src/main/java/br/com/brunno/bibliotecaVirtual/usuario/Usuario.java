@@ -1,5 +1,6 @@
 package br.com.brunno.bibliotecaVirtual.usuario;
 
+import br.com.brunno.bibliotecaVirtual.compartilhado.ExcludeGeneratedFromJaCoCo;
 import br.com.brunno.bibliotecaVirtual.exemplar.Exemplar;
 import br.com.brunno.bibliotecaVirtual.emprestimo.Emprestimo;
 import br.com.brunno.bibliotecaVirtual.livro.Livro;
@@ -80,6 +81,7 @@ public class Usuario {
         return this.emprestimos.stream().anyMatch(Emprestimo::expirado);
     }
 
+    @ExcludeGeneratedFromJaCoCo
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,6 +90,7 @@ public class Usuario {
         return Objects.equals(email, usuario.email) && tipo == usuario.tipo;
     }
 
+    @ExcludeGeneratedFromJaCoCo
     @Override
     public int hashCode() {
         return Objects.hash(email, tipo);

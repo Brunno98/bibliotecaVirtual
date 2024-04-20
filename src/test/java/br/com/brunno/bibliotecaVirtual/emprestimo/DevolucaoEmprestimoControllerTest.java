@@ -68,6 +68,63 @@ class DevolucaoEmprestimoControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("X-EMAIL", "test@email.com"))
                 .andExpect(status().isOk());
+
+        // Deve retornar bad request se tentar devoler um emprestimo ja devolvido
+        mockMvc.perform(post("/emprestimo/"+emprestimoId+"/devolucao")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("X-EMAIL", "test@email.com"))
+                .andExpect(status().isBadRequest());
     }
+
+    @Test
+    @DisplayName("Deve retornar NOT FOUND quando o usuario que devolver o emprestimo for diferente do usuario que pegou " +
+            "o emprestimo")
+    void test2() throws Exception {
+        mockMvc.perform(post("/usuario")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Map.of(
+                        "email", "test@email.com",
+                        "senha", "123456",
+                        "tipo", "PADRAO"
+                ))));
+        mockMvc.perform(post("/usuario")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Map.of(
+                        "email", "otherUser@email.com",
+                        "senha", "123456",
+                        "tipo", "PADRAO"
+                ))));
+
+        mockMvc.perform(post("/livro")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Map.of(
+                        "titulo", "livro de test",
+                        "preco", 42,
+                        "isbn", "ABCDE"
+                ))));
+
+        mockMvc.perform(post("/livro/ABCDE/exemplar")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Map.of(
+                        "tipo", "LIVRE"
+                ))));
+
+        MvcResult criaEmprestimoResponse = mockMvc.perform(post("/livro/ABCDE/emprestimo")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("X-EMAIL", "test@email.com")
+                .content(objectMapper.writeValueAsBytes(Map.of(
+                        "diasDeEmprestimo", 60
+                )))).andReturn();
+
+        Map<String, String> emprestimoResponseBody = objectMapper.readValue(
+                criaEmprestimoResponse.getResponse().getContentAsByteArray(), new TypeReference<Map<String, String>>() {});
+
+        String emprestimoId = emprestimoResponseBody.get("id");
+        mockMvc.perform(post("/emprestimo/"+emprestimoId+"/devolucao")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("X-EMAIL", "otherUser@email.com"))
+                .andExpect(status().isNotFound());
+    }
+
 
 }

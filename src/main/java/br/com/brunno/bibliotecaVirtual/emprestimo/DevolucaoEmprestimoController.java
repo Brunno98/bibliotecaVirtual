@@ -3,6 +3,7 @@ package br.com.brunno.bibliotecaVirtual.emprestimo;
 import br.com.brunno.bibliotecaVirtual.compartilhado.Exists;
 import br.com.brunno.bibliotecaVirtual.usuario.Usuario;
 import br.com.brunno.bibliotecaVirtual.usuario.UsuarioRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindException;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -44,9 +46,7 @@ public class DevolucaoEmprestimoController {
         Usuario usuario = possivelUsuario.get();
 
         if (!emprestimo.feitoPor(usuario)) {
-            BeanPropertyBindingResult devolucaoDeEmprestimo = new BeanPropertyBindingResult(null, "devolucaoDeEmprestimo");
-            devolucaoDeEmprestimo.reject(null, "Emprestimo nao foi feito pelo usuario informado");
-            throw new BindException(devolucaoDeEmprestimo);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
         emprestimo.devolver();
