@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-public class DevolucaoEmprestimocontroller {
+public class DevolucaoEmprestimoController {
 
     private final UsuarioRepository usuarioRepository;
     private final EmprestimoRepository emprestimoRepository;
 
-    public DevolucaoEmprestimocontroller(UsuarioRepository usuarioRepository, EmprestimoRepository emprestimoRepository) {
+    public DevolucaoEmprestimoController(UsuarioRepository usuarioRepository, EmprestimoRepository emprestimoRepository) {
         this.usuarioRepository = usuarioRepository;
         this.emprestimoRepository = emprestimoRepository;
     }
